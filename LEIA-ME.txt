@@ -1,0 +1,30 @@
+FF CONTROL — PWA para iPhone
+================================
+
+O que é
+- Aplicativo web instalável (PWA), com aparência de app.
+- Guarda as preferências localmente no navegador.
+- Inclui ícones, manifesto e cache offline básico.
+- É um configurador visual: não se conecta ao Free Fire nem implementa ESP/aimbot no jogo.
+
+PUBLICAR PELO WINDOWS 11 COM GITHUB PAGES
+1. Extraia a pasta ff-control-pwa.
+2. Entre em https://github.com e crie uma conta, se necessário.
+3. Crie um repositório público chamado ff-control.
+4. Envie TODOS os arquivos desta pasta para a raiz do repositório (index.html, manifest.webmanifest, sw.js e pasta icons).
+5. No repositório, abra Settings > Pages.
+6. Em Build and deployment, selecione Deploy from a branch.
+7. Escolha Branch: main e Folder: / (root), depois Save.
+8. Aguarde a publicação. O endereço será:
+   https://SEU-USUARIO.github.io/ff-control/
+
+INSTALAR NO IPHONE
+1. Abra o endereço publicado no Safari (não no navegador interno de outro app).
+2. Toque em Compartilhar.
+3. Escolha Adicionar à Tela de Início.
+4. Confirme em Adicionar.
+
+NOTA
+- Para publicar em Pages, o repositório precisa conter os arquivos diretamente na raiz.
+- A instalação como app exige endereço HTTPS. O arquivo local aberto no Safari não instala como PWA.
+- O armazenamento local fica no navegador/dispositivo; exporte suas configurações para manter uma cópia.

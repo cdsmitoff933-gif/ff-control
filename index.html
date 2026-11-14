@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090d18">
+<meta name="description" content="FF Control — configurador visual de interface e preferências.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>FF Control — Configurador</title>
+<style>
+:root{color-scheme:dark;--bg:#090d18;--panel:#111827;--panel2:#172235;--line:#26354c;--txt:#eef4ff;--muted:#91a2ba;--accent:#7c5cff;--cyan:#42d9cf}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% -10%,#29205a 0,transparent 42%),var(--bg);color:var(--txt);font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{padding:25px 19px 17px;position:sticky;top:0;background:#090d18eF;backdrop-filter:blur(16px);z-index:3;border-bottom:1px solid #26354c}
+.brand{display:flex;align-items:center;gap:11px}.logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#8a63ff,#36d6cb);display:grid;place-items:center;font-weight:900;color:#08101c;letter-spacing:-1px}
+h1{font-size:19px;margin:0}header p{margin:4px 0 0;color:var(--muted);font-size:12px}
+main{max-width:720px;margin:auto;padding:17px 15px 40px}.notice{border:1px solid #3d4770;background:#171a35;border-radius:14px;padding:12px 14px;color:#c8c7ff;font-size:12px;line-height:1.5;margin-bottom:16px}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:15px}.tab{border:1px solid var(--line);background:var(--panel);color:var(--muted);padding:12px 8px;border-radius:12px;font-weight:700}.tab.active{background:#29234d;border-color:#7964e9;color:#fff}
+.card{background:linear-gradient(180deg,#141e2e,#101827);border:1px solid var(--line);border-radius:17px;padding:16px;margin:12px 0}.card h2{font-size:15px;margin:0 0 14px}.row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px solid #26354c}.row:first-of-type{border-top:0}.row small{display:block;color:var(--muted);font-size:11px;margin-top:3px}.switch{appearance:none;width:44px;height:26px;background:#344258;border-radius:20px;position:relative;flex:none;transition:.2s}.switch:before{content:"";position:absolute;width:20px;height:20px;top:3px;left:3px;background:white;border-radius:50%;transition:.2s}.switch:checked{background:var(--accent)}.switch:checked:before{left:21px}
+.control{padding:12px 0;border-top:1px solid #26354c}.control:first-of-type{border-top:0}.control-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}.control label{font-size:13px;font-weight:600}.value{font-size:12px;color:#bcb0ff;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--accent)}input[type=color]{width:42px;height:32px;border:0;background:none;padding:0}
+select{background:#0d1523;border:1px solid var(--line);color:var(--txt);padding:9px 10px;border-radius:9px;max-width:56%}
+.actions{display:flex;gap:9px;margin-top:16px}.btn{flex:1;border:1px solid var(--line);border-radius:12px;padding:13px;background:#1a2639;color:white;font-weight:700}.btn.primary{background:linear-gradient(135deg,#7658f6,#4b45bb);border:0}
+.preview{height:190px;border-radius:13px;background:linear-gradient(135deg,#0c1926,#16283a);border:1px solid #30465d;position:relative;overflow:hidden;display:grid;place-items:center}
+.target{width:70px;height:118px;border:2px solid var(--cyan);position:relative;border-radius:5px}.target:before{content:"ALVO • 24m";position:absolute;top:-23px;left:-2px;font-size:10px;color:var(--cyan);white-space:nowrap}.target:after{content:"";position:absolute;left:50%;top:50%;height:95px;border-left:1px dashed var(--cyan);opacity:.5}
+.cross{position:absolute;width:12px;height:12px;border:1px solid #b9a9ff;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%)}
+footer{text-align:center;color:#71829b;font-size:11px;padding:18px}
+.hidden{display:none!important}
+@media(min-width:600px){main{padding-top:24px}.card{padding:20px}}
+</style>
+</head>
+<body>
+<header><div class="brand"><div class="logo">FF</div><div><h1>FF CONTROL</h1><p>Configurador visual • iPhone / Safari</p></div></div></header><div style="max-width:720px;margin:0 auto;padding:10px 15px 0"><button id="installBtn" class="btn" style="display:none;width:100%">Adicionar aplicativo</button></div>
+<main>
+<div class="notice"><b>Modo configurador:</b> este Web App salva preferências e demonstra a aparência dos controles. Não se conecta ao Free Fire, não lê a tela/memória do jogo e não executa ESP ou aimbot.</div>
+<div class="tabs">
+<button class="tab active" data-tab="esp">ESP</button><button class="tab" data-tab="aim">AIMBOT</button><button class="tab" data-tab="visual">VISUAL</button>
+</div>
+<section id="esp" class="pane">
+<div class="card"><h2>Elementos ESP — pré-visualização</h2>
+<div class="preview"><div class="target" id="previewBox"></div><div class="cross"></div></div>
+<div class="row"><div><b>Box 2D</b><small>Contorno ao redor do alvo (prévia)</small></div><input class="switch" type="checkbox" data-save="box" checked></div>
+<div class="row"><div><b>Nome</b><small>Exibir identificação na prévia</small></div><input class="switch" type="checkbox" data-save="name" checked></div>
+<div class="row"><div><b>Distância</b><small>Exibir distância ilustrativa</small></div><input class="switch" type="checkbox" data-save="distance" checked></div>
+<div class="row"><div><b>Barra de vida</b><small>Indicador demonstrativo</small></div><input class="switch" type="checkbox" data-save="health" checked></div>
+<div class="row"><div><b>Linhas</b><small>Linhas de referência na prévia</small></div><input class="switch" type="checkbox" data-save="lines"></div>
+<div class="row"><div><b>Esqueleto</b><small>Alternar elemento ilustrativo</small></div><input class="switch" type="checkbox" data-save="skeleton"></div>
+</div>
+<div class="card"><h2>Aparência do ESP</h2>
+<div class="control"><div class="control-head"><label for="boxColor">Cor da box</label><input id="boxColor" type="color" data-save="boxColor" value="#42d9cf"></div></div>
+<div class="control"><div class="control-head"><label for="lineColor">Cor das linhas</label><input id="lineColor" type="color" data-save="lineColor" value="#a58bff"></div></div>
+<div class="control"><div class="control-head"><label for="thickness">Espessura</label><span class="value" id="thicknessVal">2 px</span></div><input id="thickness" type="range" min="1" max="6" value="2" data-save="thickness"></div>
+<div class="control"><div class="control-head"><label for="opacity">Opacidade</label><span class="value" id="opacityVal">85%</span></div><input id="opacity" type="range" min="10" max="100" value="85" data-save="opacity"></div>
+</div></section>
+<section id="aim" class="pane hidden">
+<div class="card"><h2>Parâmetros de mira — simulador visual</h2>
+<div class="row"><div><b>Assistência de mira</b><small>Controle ilustrativo, sem integração ao jogo</small></div><input class="switch" type="checkbox" data-save="aimEnabled"></div>
+<div class="control"><div class="control-head"><label for="strength">Intensidade</label><span class="value" id="strengthVal">50%</span></div><input id="strength" type="range" min="0" max="100" value="50" data-save="strength"></div>
+<div class="control"><div class="control-head"><label for="fov">Campo de visão (FOV)</label><span class="value" id="fovVal">90°</span></div><input id="fov" type="range" min="10" max="180" value="90" data-save="fov"></div>
+<div class="control"><div class="control-head"><label for="smooth">Suavização</label><span class="value" id="smoothVal">40%</span></div><input id="smooth" type="range" min="0" max="100" value="40" data-save="smooth"></div>
+<div class="row"><label for="region"><b>Região selecionada</b></label><select id="region" data-save="region"><option value="Cabeça">Cabeça</option><option value="Pescoço">Pescoço</option><option value="Peito">Peito</option><option value="Corpo">Corpo</option></select></div>
+<div class="row"><label for="aimMode"><b>Perfil</b></label><select id="aimMode" data-save="aimMode"><option>Suave</option><option>Balanceado</option><option>Forte</option><option>Personalizado</option></select></div>
+</div></section>
+<section id="visual" class="pane hidden">
+<div class="card"><h2>Interface</h2>
+<div class="row"><div><b>Efeito de brilho</b><small>Realce visual do painel</small></div><input class="switch" type="checkbox" data-save="glow" checked></div>
+<div class="row"><div><b>Animações</b><small>Transições dos controles</small></div><input class="switch" type="checkbox" data-save="animations" checked></div>
+<div class="row"><label for="theme"><b>Tema</b></label><select id="theme" data-save="theme"><option value="violet">Roxo / Ciano</option><option value="red">Vermelho</option><option value="blue">Azul</option></select></div>
+</div>
+<div class="card"><h2>Configurações</h2><p style="color:var(--muted);font-size:12px;line-height:1.5">As alterações são guardadas neste navegador do iPhone. Use exportar para copiar uma cópia das suas preferências.</p>
+<div class="actions"><button class="btn primary" id="export">Exportar</button><button class="btn" id="reset">Restaurar</button></div>
+</div></section>
+<footer>FF CONTROL • Configurações locais no dispositivo</footer>
+</main>
+<script>
+const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
+const keys=()=>$$('[data-save]');
+function load(){keys().forEach(el=>{const v=localStorage.getItem('ff_'+el.dataset.save);if(v!==null){if(el.type==='checkbox')el.checked=v==='true';else el.value=v;}});refresh();}
+function save(el){localStorage.setItem('ff_'+el.dataset.save,el.type==='checkbox'?el.checked:el.value);refresh();}
+function refresh(){
+[['thickness','thicknessVal',' px'],['opacity','opacityVal','%'],['strength','strengthVal','%'],['fov','fovVal','°'],['smooth','smoothVal','%']].forEach(([a,b,u])=>{const e=$('#'+a);if(e)$('#'+b).textContent=e.value+u;});
+const box=$('#previewBox');box.style.borderColor=$('#boxColor').value;box.style.borderWidth=$('#thickness').value+'px';box.style.opacity=Number($('#opacity').value)/100;
+box.style.display=$('[data-save="box"]').checked?'block':'none';
+}
+$$('.tab').forEach(btn=>btn.addEventListener('click',()=>{$$('.tab').forEach(x=>x.classList.toggle('active',x===btn));$$('.pane').forEach(p=>p.classList.toggle('hidden',p.id!==btn.dataset.tab));}));
+keys().forEach(el=>el.addEventListener('input',()=>save(el)));
+$('#export').addEventListener('click',()=>{const data={};keys().forEach(el=>data[el.dataset.save]=el.type==='checkbox'?el.checked:el.value);const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='ff-control-config.json';a.click();URL.revokeObjectURL(url);});
+$('#reset').addEventListener('click',()=>{if(confirm('Restaurar todas as configurações?')){keys().forEach(el=>localStorage.removeItem('ff_'+el.dataset.save));location.reload();}});
+load();
+let installPrompt;
+window.addEventListener('beforeinstallprompt', (event) => {
+  event.preventDefault();
+  installPrompt = event;
+  const btn = document.getElementById('installBtn');
+  btn.style.display = 'block';
+  btn.addEventListener('click', async () => {
+    installPrompt.prompt();
+    await installPrompt.userChoice;
+    installPrompt = null;
+    btn.style.display = 'none';
+  }, { once: true });
+});
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+}
+</script>
+</body>
+</html>
